@@ -9,8 +9,10 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.imageImageSmoothingEnabled = false;
 
 const SCALE = 5;
+const WIDTH = Math.floor(window.innerWidth / SCALE),
+      HEIGHT = Math.floor(window.innerHeight / SCALE);
 
-const G = -9.8;
+const G = -0.2;
 
 const Orientation = {
     LEFT: -1,
@@ -18,7 +20,8 @@ const Orientation = {
 };
 
 class Player {
-    WALKING_SPEED = 5;
+    WALKING_SPEED = 3;
+    JUMP_SPEED = 5;
 
     constructor() {
         this.size_x = 9;
@@ -28,6 +31,10 @@ class Player {
         this.x = 0;
         this.y = 0;
         this.orientation = Orientation.RIGHT;
+    }
+
+    isOnSurface() {
+        return (this.y <= 0);
     }
 }
 
@@ -45,16 +52,22 @@ for (let image_name of image_names) {
 
 function tick() {
     // Move player
-    player.vel_y += G;
     player.x += player.vel_x;
     player.y += player.vel_y;
+    player.vel_y += G;
+    if (player.isOnSurface()) {
+        player.vel_y = 0;
+        player.y = 0;
+    }
 }
 function draw() {
     //ctx.fillStyle = 'rgb(0,' + (255/MAX_GRASS_GROWTH * grass[row][col]) + ',0)';
     //ctx.fillRect(col * SIZE, row * SIZE, SIZE, SIZE);
+    console.log('Redrawing screen.');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw player
-    ctx.drawImage(images.player, SCALE * player.x, SCALE * player.y,
+    ctx.drawImage(images.player, SCALE * player.x, SCALE * (HEIGHT - player.y - player.size_y),
                   SCALE * player.size_x, SCALE * player.size_y);
 }
 function loop() {
@@ -71,7 +84,13 @@ window.onkeydown = function(e) {
     switch (key) {
         // Up arrow
         case 38:
-            player.vel_y = 5;
+            if (player.isOnSurface()) {
+                player.vel_y = player.JUMP_SPEED;
+                console.log('ON SURFACE');
+                console.log(player.y);
+            } else {
+                console.log('**NOT** ON SURFACE');
+            }
             break;
         // Down arrow
         case 40:
@@ -97,7 +116,6 @@ window.onkeyup = function(e) {
     switch (key) {
         // Up arrow
         case 38:
-            player.vel_y = 5;
             break;
         // Down arrow
         case 40:
@@ -109,10 +127,9 @@ window.onkeyup = function(e) {
             player.vel_x = 0;
             break;
         default:
-            console.log(key);
             break;
     }
 }
 
 loop();
-let main_loop = setInterval(loop, 1);
+let main_loop = setInterval(loop, 5);
