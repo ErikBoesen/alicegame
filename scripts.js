@@ -19,6 +19,34 @@ const Orientation = {
     RIGHT: 1,
 };
 
+const imageNames = [
+    'player',
+    'storefronts',
+];
+function getImage(imageName) {
+    let image = new Image();
+    image.src = 'images/' + imageName + '.png';
+    return image;
+}
+const images = {};
+for (let imageName of imageNames) {
+    images[imageName] = getImage(imageName);
+}
+
+class Room {
+    constructor(name, x, y, size_x, size_y) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.size_x = size_x;
+        this.size_y = size_y;
+    }
+}
+
+let rooms = [
+    new Room('storefronts', 0, 0, 508, 96),
+];
+
 class Player {
     WALKING_SPEED = 3;
     JUMP_SPEED = 5;
@@ -40,15 +68,6 @@ class Player {
 
 let player = new Player();
 
-const image_names = [
-    'player',
-];
-const images = {};
-for (let image_name of image_names) {
-    let image = new Image();
-    image.src = 'images/' + image_name + '.png';
-    images[image_name] = image;
-}
 
 function tick() {
     // Move player
@@ -66,8 +85,18 @@ function draw() {
     console.log('Redrawing screen.');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    for (let room of rooms) {
+        let image = images[room.name];
+        if (image.complete && image.naturalWidth !== 0) {
+            ctx.drawImage(image,
+                          SCALE * room.x, SCALE * (HEIGHT - room.y - room.size_y),
+                          SCALE * room.size_x, SCALE * room.size_y);
+        }
+    }
+
     // Draw player
-    ctx.drawImage(images.player, SCALE * player.x, SCALE * (HEIGHT - player.y - player.size_y),
+    ctx.drawImage(images.player,
+                  SCALE * player.x, SCALE * (HEIGHT - player.y - player.size_y),
                   SCALE * player.size_x, SCALE * player.size_y);
 }
 function loop() {
@@ -86,10 +115,6 @@ window.onkeydown = function(e) {
         case 38:
             if (player.isOnSurface()) {
                 player.vel_y = player.JUMP_SPEED;
-                console.log('ON SURFACE');
-                console.log(player.y);
-            } else {
-                console.log('**NOT** ON SURFACE');
             }
             break;
         // Down arrow
@@ -104,9 +129,6 @@ window.onkeydown = function(e) {
         case 39:
             player.orientation = Orientation.RIGHT;
             player.vel_x = player.orientation * player.WALKING_SPEED;
-            break;
-        default:
-            console.log(key);
             break;
     }
 }
@@ -125,8 +147,6 @@ window.onkeyup = function(e) {
         // Right arrow
         case 39:
             player.vel_x = 0;
-            break;
-        default:
             break;
     }
 }
