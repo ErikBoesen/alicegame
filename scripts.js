@@ -34,28 +34,32 @@ for (let imageName of imageNames) {
 }
 
 class Room {
-    constructor(name, x, y, size_x, size_y) {
+    constructor(name, x, y, width, height) {
         this.name = name;
         this.x = x;
         this.y = y;
-        this.size_x = size_x;
-        this.size_y = size_y;
+        this.width = width;
+        this.height = height;
     }
 }
 
-let rooms = [
-    new Room('storefronts', 0, 0, 508, 96),
-];
+class Platform {
+    constructor(x, y, width) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+    }
+}
 
 class Player {
-    WALKING_SPEED = 3;
-    JUMP_SPEED = 5;
+    WALKING_SPEED = 1;
+    JUMP_SPEED = 4;
 
     constructor() {
-        this.size_x = 9;
-        this.size_y = 40;
-        this.vel_x = 0;
-        this.vel_y = 0;
+        this.width = 9;
+        this.height = 40;
+        this.velocityX = 0;
+        this.velocityY = 0;
         this.x = 0;
         this.y = 0;
         this.orientation = Orientation.RIGHT;
@@ -66,16 +70,24 @@ class Player {
     }
 }
 
+let viewportX = 0;
+let viewportY = 0;
+let rooms = [
+    new Room('storefronts', 0, 0, 508, 96),
+];
+let platforms = [
+    new Platform(0, 2, 508),
+]
 let player = new Player();
 
 
 function tick() {
     // Move player
-    player.x += player.vel_x;
-    player.y += player.vel_y;
-    player.vel_y += G;
+    player.x += player.velocityX;
+    player.y += player.velocityY;
+    player.velocityY += G;
     if (player.isOnSurface()) {
-        player.vel_y = 0;
+        player.velocityY = 0;
         player.y = 0;
     }
 }
@@ -89,15 +101,15 @@ function draw() {
         let image = images[room.name];
         if (image.complete && image.naturalWidth !== 0) {
             ctx.drawImage(image,
-                          SCALE * room.x, SCALE * (HEIGHT - room.y - room.size_y),
-                          SCALE * room.size_x, SCALE * room.size_y);
+                          SCALE * room.x, SCALE * (HEIGHT - room.y - room.height),
+                          SCALE * room.width, SCALE * room.height);
         }
     }
 
     // Draw player
     ctx.drawImage(images.player,
-                  SCALE * player.x, SCALE * (HEIGHT - player.y - player.size_y),
-                  SCALE * player.size_x, SCALE * player.size_y);
+                  SCALE * player.x, SCALE * (HEIGHT - player.y - player.height),
+                  SCALE * player.width, SCALE * player.height);
 }
 function loop() {
     tick();
@@ -114,7 +126,7 @@ window.onkeydown = function(e) {
         // Up arrow
         case 38:
             if (player.isOnSurface()) {
-                player.vel_y = player.JUMP_SPEED;
+                player.velocityY = player.JUMP_SPEED;
             }
             break;
         // Down arrow
@@ -123,12 +135,12 @@ window.onkeydown = function(e) {
         // Left arrow
         case 37:
             player.orientation = Orientation.LEFT;
-            player.vel_x = player.orientation * player.WALKING_SPEED;
+            player.velocityX = player.orientation * player.WALKING_SPEED;
             break;
         // Right arrow
         case 39:
             player.orientation = Orientation.RIGHT;
-            player.vel_x = player.orientation * player.WALKING_SPEED;
+            player.velocityX = player.orientation * player.WALKING_SPEED;
             break;
     }
 }
@@ -146,7 +158,7 @@ window.onkeyup = function(e) {
         case 37:
         // Right arrow
         case 39:
-            player.vel_x = 0;
+            player.velocityX = 0;
             break;
     }
 }
