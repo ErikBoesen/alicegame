@@ -106,6 +106,13 @@ function draw() {
         }
     }
 
+    // Debug: draw platforms
+    for (let platform of platforms) {
+        ctx.fillStyle = '#faa';
+        ctx.fillRect(SCALE * platform.x, SCALE * (HEIGHT - platform.y - 3),
+                     SCALE * platform.width, SCALE * 3);
+    }
+
     // Draw player
     ctx.drawImage(images.player,
                   SCALE * player.x, SCALE * (HEIGHT - player.y - player.height),
