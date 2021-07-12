@@ -44,42 +44,54 @@ class Room {
 }
 
 class Platform {
-    constructor(x, y, width) {
+    constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
         this.width = width;
+        this.height = 10;
     }
 }
+
+let rooms = [
+    new Room('storefronts', 0, 0, 508, 96),
+];
+let platforms = [
+    new Platform(0, 5, 508),
+]
 
 class Player {
     WALKING_SPEED = 1;
     JUMP_SPEED = 4;
 
-    constructor() {
-        this.width = 9;
-        this.height = 40;
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
         this.velocityX = 0;
         this.velocityY = 0;
-        this.x = 0;
-        this.y = 0;
+        this.width = 9;
+        this.height = 40;
         this.orientation = Orientation.RIGHT;
     }
 
     isOnSurface() {
-        return (this.y <= 0);
+        for (let platform of platforms) {
+            if (
+                (this.x + this.width > platform.x && this.x < platform.x + platform.width)
+                && (platform.y >= this.y && this.y > platform.y - platform.height)
+            ) {
+                this.y = platform.y;
+                console.log('YEAH');
+                return true;
+            }
+        }
+        return false;
     }
 }
 
+let player = new Player(5, 40);
+
 let viewportX = 0;
 let viewportY = 0;
-let rooms = [
-    new Room('storefronts', 0, 0, 508, 96),
-];
-let platforms = [
-    new Platform(0, 2, 508),
-]
-let player = new Player();
-
 
 function tick() {
     // Move player
@@ -88,7 +100,6 @@ function tick() {
     player.velocityY += G;
     if (player.isOnSurface()) {
         player.velocityY = 0;
-        player.y = 0;
     }
 }
 function draw() {
@@ -109,8 +120,8 @@ function draw() {
     // Debug: draw platforms
     for (let platform of platforms) {
         ctx.fillStyle = '#faa';
-        ctx.fillRect(SCALE * platform.x, SCALE * (HEIGHT - platform.y - 3),
-                     SCALE * platform.width, SCALE * 3);
+        ctx.fillRect(SCALE * platform.x, SCALE * (HEIGHT - platform.y),
+                     SCALE * platform.width, SCALE * platform.height);
     }
 
     // Draw player
