@@ -8,6 +8,8 @@ ctx.mozImageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.imageImageSmoothingEnabled = false;
 
+const DEBUG = false;
+
 const SCALE = 5;
 const WIDTH = Math.floor(window.innerWidth / SCALE),
       HEIGHT = Math.floor(window.innerHeight / SCALE);
@@ -48,7 +50,7 @@ class Platform {
         this.x = x;
         this.y = y;
         this.width = width;
-        this.height = 10;
+        this.height = 5;
     }
 }
 
@@ -57,6 +59,7 @@ let rooms = [
 ];
 let platforms = [
     new Platform(0, 5, 508),
+    new Platform(23, 32, 62),
 ]
 
 class Player {
@@ -80,7 +83,6 @@ class Player {
                 && (platform.y >= this.y && this.y > platform.y - platform.height)
             ) {
                 this.y = platform.y;
-                console.log('YEAH');
                 return true;
             }
         }
@@ -117,11 +119,13 @@ function draw() {
         }
     }
 
-    // Debug: draw platforms
-    for (let platform of platforms) {
-        ctx.fillStyle = '#faa';
-        ctx.fillRect(SCALE * platform.x, SCALE * (HEIGHT - platform.y),
-                     SCALE * platform.width, SCALE * platform.height);
+    // Draw platforms
+    if (DEBUG) {
+        for (let platform of platforms) {
+            ctx.fillStyle = '#faa';
+            ctx.fillRect(SCALE * platform.x, SCALE * (HEIGHT - platform.y),
+                         SCALE * platform.width, SCALE * platform.height);
+        }
     }
 
     // Draw player
