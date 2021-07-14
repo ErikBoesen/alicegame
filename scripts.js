@@ -59,7 +59,7 @@ let rooms = [
 ];
 let platforms = [
     new Platform(0, 5, 508),
-    new Platform(23, 32, 62),
+    new Platform(23, 35, 62),
 ]
 
 class Player {
@@ -129,9 +129,12 @@ function draw() {
     }
 
     // Draw player
+    ctx.translate(SCALE * (player.x + player.width), SCALE * (HEIGHT - player.y - player.height));
+    ctx.scale(player.orientation, 1);
     ctx.drawImage(images.player,
-                  SCALE * player.x, SCALE * (HEIGHT - player.y - player.height),
+                  0, 0,
                   SCALE * player.width, SCALE * player.height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
 function loop() {
     tick();
