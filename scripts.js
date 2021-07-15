@@ -13,8 +13,9 @@ const DEBUG = false;
 const SCALE = 5;
 const WIDTH = Math.floor(window.innerWidth / SCALE),
       HEIGHT = Math.floor(window.innerHeight / SCALE);
-
-const G = -0.2;
+// Higher tolerance allows player to move closer to edge of screen without moving viewport
+const PAN_TOLERANCE = 0.7;
+const G = -0.1;
 
 const Orientation = {
     LEFT: -1,
@@ -64,7 +65,7 @@ let platforms = [
 
 class Player {
     WALKING_SPEED = 1;
-    JUMP_SPEED = 4;
+    JUMP_SPEED = 2.5;
 
     constructor(x, y) {
         this.x = x;
@@ -103,6 +104,14 @@ function tick() {
     if (player.isOnSurface()) {
         player.velocityY = 0;
     }
+    // Move viewport if needed
+    if (player.velocityX < 0 && (player.x - viewportX < (1 - PAN_TOLERANCE) * WIDTH)) {
+        viewportX = player.x - (1 - PAN_TOLERANCE) * WIDTH;
+        if (viewportX < 0) viewportX = 0;
+    }
+    if (player.velocityX > 0 && (player.x - viewportX > PAN_TOLERANCE * WIDTH)) {
+        viewportX = player.x - PAN_TOLERANCE * WIDTH;
+    }
 }
 function draw() {
     //ctx.fillStyle = 'rgb(0,' + (255/MAX_GRASS_GROWTH * grass[row][col]) + ',0)';
@@ -114,7 +123,7 @@ function draw() {
         let image = images[room.name];
         if (image.complete && image.naturalWidth !== 0) {
             ctx.drawImage(image,
-                          SCALE * room.x, SCALE * (HEIGHT - room.y - room.height),
+                          SCALE * (room.x - viewportX), SCALE * (HEIGHT - room.y - room.height - viewportY),
                           SCALE * room.width, SCALE * room.height);
         }
     }
@@ -129,10 +138,9 @@ function draw() {
     }
 
     // Draw player
-    ctx.translate(SCALE * (player.x + player.width), SCALE * (HEIGHT - player.y - player.height));
+    ctx.translate(SCALE * (player.x + player.width - viewportX), SCALE * (HEIGHT - player.y - player.height - viewportY));
     ctx.scale(player.orientation, 1);
-    ctx.drawImage(images.player,
-                  0, 0,
+    ctx.drawImage(images.player, 0, 0,
                   SCALE * player.width, SCALE * player.height);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
@@ -189,4 +197,4 @@ window.onkeyup = function(e) {
 }
 
 loop();
-let main_loop = setInterval(loop, 5);
+let main_loop = setInterval(loop, 2);
