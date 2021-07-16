@@ -8,7 +8,7 @@ ctx.mozImageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.imageImageSmoothingEnabled = false;
 
-const DEBUG = false;
+const DEBUG = true;
 
 const SCALE = 5;
 const WIDTH = Math.floor(window.innerWidth / SCALE),
@@ -61,7 +61,8 @@ let rooms = [
 let platforms = [
     new Platform(0, 5, 508),
     new Platform(23, 35, 62),
-]
+    new Platform(327, 20, 23),
+];
 
 class Player {
     WALKING_SPEED = 1;
@@ -131,8 +132,8 @@ function draw() {
     // Draw platforms
     if (DEBUG) {
         for (let platform of platforms) {
-            ctx.fillStyle = '#faa';
-            ctx.fillRect(SCALE * platform.x, SCALE * (HEIGHT - platform.y),
+            ctx.fillStyle = '#08c';
+            ctx.fillRect(SCALE * (platform.x - viewportX), SCALE * (HEIGHT - platform.y - viewportY),
                          SCALE * platform.width, SCALE * platform.height);
         }
     }
