@@ -40,4 +40,13 @@ class Player {
         }
         return false;
     }
+
+    toggleDoor(room) {
+        for (let door of room.doors) {
+            if (Math.abs(door.x - this.x) < door.width) {
+                console.log(door.open);
+                door.open = !door.open;
+            }
+        }
+    }
 }

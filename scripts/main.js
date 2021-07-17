@@ -56,7 +56,8 @@ function draw() {
         if (door.open) {
             doorX = currentRoom.x + door.x;
             doorY = currentRoom.y + door.y;
-            ctx.translate(SCALE * (doorX - viewportX), SCALE * (HEIGHT - doorY - viewportY));
+            ctx.translate(SCALE * (doorX - viewportX),
+                          SCALE * (HEIGHT - doorY - door.height - viewportY));
             ctx.scale(door.orientation, 1);
             ctx.drawImage(images.door, 0, 0,
                           SCALE * door.width, SCALE * door.height);

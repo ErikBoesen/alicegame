@@ -21,6 +21,11 @@ window.onkeydown = function(e) {
             player.orientation = Orientation.RIGHT;
             player.velocityX = player.orientation * player.WALKING_SPEED;
             break;
+        case 32:
+            player.toggleDoor(currentRoom);
+        default:
+            //console.log(key);
+            break;
     }
 };
 window.onkeyup = function(e) {
