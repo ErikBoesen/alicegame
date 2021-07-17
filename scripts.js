@@ -10,7 +10,7 @@ ctx.imageImageSmoothingEnabled = false;
 
 const DEBUG = false;
 
-const SCALE = 5;
+const SCALE = 6;
 const WIDTH = Math.floor(window.innerWidth / SCALE),
       HEIGHT = Math.floor(window.innerHeight / SCALE);
 // Higher tolerance allows player to move closer to edge of screen without moving viewport
@@ -40,7 +40,7 @@ for (let imageName of imageNames) {
 }
 
 class Room {
-    constructor(name, x, y, width, height, visible, platforms) {
+    constructor(name, x, y, width, height, visible, platforms, doors) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -48,6 +48,7 @@ class Room {
         this.height = height;
         this.visible = visible;
         this.platforms = platforms;
+        this.doors = doors;
     }
 }
 
@@ -60,9 +61,20 @@ class Platform {
     }
 }
 
+class Door {
+    constructor(x, y, destination, orientation) {
+        this.x = x;
+        this.y = y;
+        this.destination = destination;
+        this.orientation = orientation;
+    }
+}
+
 let rooms = [
     new Room('bedroom', 0, 7, 104, 55, true, [
         new Platform(0, 0, 104),
+    ], [
+        new Door(103, 0, 1, Orientation.LEFT),
     ]),
     new Room('kitchen', 104, 7, 95, 55, false, [
         new Platform(0, 0, 95),
@@ -133,6 +145,7 @@ function draw() {
     console.log('Redrawing screen.');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Draw rooms
     for (let room of rooms) {
         if (!room.visible) continue;
 
@@ -147,11 +160,24 @@ function draw() {
     // Draw platforms
     if (DEBUG) {
         for (let platform of currentRoom.platforms) {
-            ctx.fillStyle = '#08c';
             platformX = currentRoom.x + platform.x;
             platformY = currentRoom.y + platform.y;
+            ctx.fillStyle = '#08c';
             ctx.fillRect(SCALE * (platformX - viewportX), SCALE * (HEIGHT - platformY - viewportY),
                          SCALE * platform.width, SCALE * platform.height);
+        }
+    }
+
+    // Draw doors
+    for (let door of currentRoom.doors) {
+        if (door.open) {
+            doorX = currentRoom.x + door.x;
+            doorY = currentRoom.y + door.y;
+            ctx.translate(SCALE * (doorX - viewportX), SCALE * (HEIGHT - doorY - viewportY));
+            ctx.scale(door.orientation, 1);
+            ctx.drawImage(images.door, 0, 0,
+                          SCALE * door.width, SCALE * door.height);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
         }
     }
 
