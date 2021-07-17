@@ -22,22 +22,8 @@ const Orientation = {
     RIGHT: 1,
 };
 
-const imageNames = [
-    'player',
-    'door',
-    'bedroom',
-    'kitchen',
-    'storefronts',
-];
-function getImage(imageName) {
-    let image = new Image();
-    image.src = 'images/' + imageName + '.png';
-    return image;
-}
-const images = {};
-for (let imageName of imageNames) {
-    images[imageName] = getImage(imageName);
-}
+let viewportX = 0;
+let viewportY = 0;
 
 let rooms = [
     new Room('bedroom', 0, 7, 104, 55, true, [
@@ -57,9 +43,6 @@ let rooms = [
 let currentRoom = rooms[0];
 
 let player = new Player(5, 40);
-
-let viewportX = 0;
-let viewportY = 0;
 
 function tick() {
     // Move player
