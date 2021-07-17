@@ -29,15 +29,16 @@ class Player {
         return false;
     }
 
-    avoidDoor(door) {
+    avoidDoor(room, door) {
         if (!door.open) {
-            if (this.velocityX > 0 && door.x < this.x + this.width && this.x + this.width < door.x + door.width) {
+            let doorX = room.x + door.x;
+            if (this.velocityX > 0 && doorX < this.x + this.width && this.x + this.width < doorX + door.width) {
                 this.velocityX = 0;
-                this.x = door.x - this.width;
+                this.x = doorX - this.width;
             }
-            if (this.velocityX < 0 && door.x < this.x && this.x < door.x + 5) {
+            if (this.velocityX < 0 && doorX < this.x && this.x < doorX + 5) {
                 this.velocityX = 0;
-                this.x = door.x + 5;
+                this.x = doorX + 5;
             }
         }
     }
@@ -54,19 +55,20 @@ class Player {
             return true;
         }
         for (let door of room.doors) {
-            this.avoidDoor(door);
+            this.avoidDoor(room, door);
         }
         return false;
     }
 
     toggleDoor(room) {
         for (let door of room.doors) {
-            if (Math.abs(door.x - this.x) < door.width) {
+            let doorX = room.x + door.x;
+            if (Math.abs(doorX - this.x) < door.width) {
                 door.open = !door.open;
                 if (door.open) {
                     rooms[door.destination].visible = true;
                 } else {
-                    this.avoidDoor(door);
+                    this.avoidDoor(room, door);
                 }
             }
         }

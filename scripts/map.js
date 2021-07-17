@@ -1,11 +1,11 @@
 let rooms = [
     new Room('bedroom', 0, 7, 104, 55, true, false, true, [
-        new Platform(0, 0, 104),
+        new Platform(0, 1, 104),
     ], [
         new Door(102, 2, 1, Orientation.LEFT, false),
     ], []),
     new Room('kitchen', 104, 7, 95, 55, false, true, true, [
-        new Platform(0, 0, 95),
+        new Platform(0, 1, 95),
     ], [
         new Door(93, 2, 2, Orientation.LEFT, false),
     ]),
