@@ -1,6 +1,7 @@
 const GRAVITY = -0.1,
       // Higher tolerance allows player to move closer to edge of screen without moving viewport
-      PAN_TOLERANCE = 0.7;
+      PAN_TOLERANCE_X = 0.7,
+      PAN_TOLERANCE_Y = 0.7;
 
 let viewportX = 0,
     viewportY = 0;
@@ -25,12 +26,20 @@ function tick() {
     }
 
     // Move viewport if needed
-    if (player.velocityX < 0 && (player.x - viewportX < (1 - PAN_TOLERANCE) * WIDTH)) {
-        viewportX = player.x - (1 - PAN_TOLERANCE) * WIDTH;
+    if (player.velocityX < 0 && (player.x - viewportX < (1 - PAN_TOLERANCE_X) * WIDTH)) {
+        viewportX = player.x - (1 - PAN_TOLERANCE_X) * WIDTH;
         if (viewportX < 0) viewportX = 0;
     }
-    if (player.velocityX > 0 && (player.x - viewportX > PAN_TOLERANCE * WIDTH)) {
-        viewportX = player.x - PAN_TOLERANCE * WIDTH;
+    if (player.velocityX > 0 && (player.x - viewportX > PAN_TOLERANCE_X * WIDTH)) {
+        viewportX = player.x - PAN_TOLERANCE_X * WIDTH;
+    }
+
+    if (player.velocityY < 0 && (player.y + viewportY < (1 - PAN_TOLERANCE_Y) * HEIGHT)) {
+        viewportY = -(player.y - (1 - PAN_TOLERANCE_Y) * HEIGHT);
+        if (viewportY > 0) viewportY = 0;
+    }
+    if (player.velocityY > 0 && (player.y + viewportY > PAN_TOLERANCE_Y * HEIGHT)) {
+        viewportY = -(player.y - PAN_TOLERANCE_Y * HEIGHT);
     }
 }
 
