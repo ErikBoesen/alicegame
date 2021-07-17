@@ -8,7 +8,7 @@ ctx.mozImageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.imageImageSmoothingEnabled = false;
 
-const DEBUG = true;
+const DEBUG = false;
 
 const SCALE = 5;
 const WIDTH = Math.floor(window.innerWidth / SCALE),
@@ -40,12 +40,13 @@ for (let imageName of imageNames) {
 }
 
 class Room {
-    constructor(name, x, y, width, height, platforms) {
+    constructor(name, x, y, width, height, visible, platforms) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.visible = visible;
         this.platforms = platforms;
     }
 }
@@ -60,13 +61,13 @@ class Platform {
 }
 
 let rooms = [
-    new Room('bedroom', 0, 7, 104, 55, [
+    new Room('bedroom', 0, 7, 104, 55, true, [
         new Platform(0, 0, 104),
     ]),
-    new Room('kitchen', 104, 7, 95, 55, [
+    new Room('kitchen', 104, 7, 95, 55, false, [
         new Platform(0, 0, 95),
     ]),
-    new Room('storefronts', 199, 0, 508, 96, [
+    new Room('storefronts', 199, 0, 508, 96, false, [
         new Platform(0, 5, 508),
         new Platform(23, 35, 62),
         new Platform(327, 20, 23),
@@ -133,6 +134,8 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let room of rooms) {
+        if (!room.visible) continue;
+
         let image = images[room.name];
         if (image.complete && image.naturalWidth !== 0) {
             ctx.drawImage(image,
