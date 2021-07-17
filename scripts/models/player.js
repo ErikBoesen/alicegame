@@ -26,4 +26,18 @@ class Player {
         }
         return false;
     }
+
+    isOnWalls(room) {
+        if (!room.leftOpen && this.x < room.x) {
+            this.x = room.x;
+            if (this.velocityX < 0) this.velocityX = 0;
+            return true;
+        }
+        if (!room.rightOpen && this.x + this.width > room.x + room.width) {
+            this.x = room.x + room.width - this.width;
+            if (this.velocityX > 0) this.velocityX = 0;
+            return true;
+        }
+        return false;
+    }
 }
