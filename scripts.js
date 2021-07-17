@@ -140,8 +140,6 @@ function tick() {
     }
 }
 function draw() {
-    //ctx.fillStyle = 'rgb(0,' + (255/MAX_GRASS_GROWTH * grass[row][col]) + ',0)';
-    //ctx.fillRect(col * SIZE, row * SIZE, SIZE, SIZE);
     console.log('Redrawing screen.');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
