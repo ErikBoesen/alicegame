@@ -1,7 +1,7 @@
 const GRAVITY = -0.1,
       // Higher tolerance allows player to move closer to edge of screen without moving viewport
       PAN_TOLERANCE_X = 0.7,
-      PAN_TOLERANCE_Y = 0.7;
+      PAN_TOLERANCE_Y = 0.6;
 
 let viewportX = 0,
     viewportY = 0;

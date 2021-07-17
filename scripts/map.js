@@ -31,7 +31,14 @@ let rooms = [
         new Platform(360, 74, 50),
     ], []),
     new Room('sky', 520, 96, 175, 96, true, false, false, [
+        // Main roof landing
         new Platform(100, 5, 76),
+        new Platform(100, 35, 76),
+
+        // Distant rooves, bottom to top
+        new Platform(53, 44, 37),
+        new Platform(25, 66, 47),
+        new Platform(74, 77, 33),
     ], []),
 ];
 let currentRoom = rooms[0];
