@@ -9,10 +9,13 @@ function tick() {
     // Move player
     player.x += player.velocityX;
     player.y += player.velocityY;
-    player.velocityY += GRAVITY
+    player.velocityY += GRAVITY;
     if (player.isOnPlatforms(currentRoom)) {
         player.velocityY = 0;
     }
+    if (player.isOnWalls(currentRoom)) {
+    }
+
     // Move viewport if needed
     if (player.velocityX < 0 && (player.x - viewportX < (1 - PAN_TOLERANCE) * WIDTH)) {
         viewportX = player.x - (1 - PAN_TOLERANCE) * WIDTH;
@@ -32,11 +35,9 @@ function draw() {
         if (!room.visible) continue;
 
         let image = images[room.name];
-        if (image.complete && image.naturalWidth !== 0) {
-            ctx.drawImage(image,
-                          SCALE * (room.x - viewportX), SCALE * (HEIGHT - room.y - room.height - viewportY),
-                          SCALE * room.width, SCALE * room.height);
-        }
+        ctx.drawImage(image,
+                      SCALE * (room.x - viewportX), SCALE * (HEIGHT - room.y - room.height - viewportY),
+                      SCALE * room.width, SCALE * room.height);
     }
 
     // Draw platforms
@@ -64,7 +65,8 @@ function draw() {
     }
 
     // Draw player
-    ctx.translate(SCALE * (player.x + player.width - viewportX), SCALE * (HEIGHT - player.y - player.height - viewportY));
+    ctx.translate(SCALE * (player.x - viewportX + (player.orientation === Orientation.LEFT ? player.width : 0)),
+                  SCALE * (HEIGHT - player.y - player.height - viewportY));
     ctx.scale(player.orientation, 1);
     ctx.drawImage(images.player, 0, 0,
                   SCALE * player.width, SCALE * player.height);
