@@ -4,7 +4,7 @@ window.onkeydown = function(e) {
     switch (key) {
         // Up arrow
         case 38:
-            if (player.isOnPlatforms(currentRoom)) {
+            if (player.isOnPlatforms(rooms)) {
                 player.velocityY = player.JUMP_SPEED;
             }
             break;
