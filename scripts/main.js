@@ -10,17 +10,12 @@ ctx.imageImageSmoothingEnabled = false;
 
 const DEBUG = false;
 
-const SCALE = 6;
-const WIDTH = Math.floor(window.innerWidth / SCALE),
+const SCALE = 6,
+      WIDTH = Math.floor(window.innerWidth / SCALE),
       HEIGHT = Math.floor(window.innerHeight / SCALE);
 // Higher tolerance allows player to move closer to edge of screen without moving viewport
+const GRAVITY = -0.1;
 const PAN_TOLERANCE = 0.7;
-const G = -0.1;
-
-const Orientation = {
-    LEFT: -1,
-    RIGHT: 1,
-};
 
 let viewportX = 0;
 let viewportY = 0;
@@ -48,7 +43,7 @@ function tick() {
     // Move player
     player.x += player.velocityX;
     player.y += player.velocityY;
-    player.velocityY += G;
+    player.velocityY += GRAVITY
     if (player.isOnPlatforms(currentRoom)) {
         player.velocityY = 0;
     }
