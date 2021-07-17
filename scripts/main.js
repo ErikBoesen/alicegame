@@ -9,6 +9,14 @@ function tick() {
     // Move player
     player.x += player.velocityX;
     player.y += player.velocityY;
+    for (let room of rooms) {
+        if (room.x < player.x && player.x < room.x + room.width &&
+            room.y < player.y + player.height && player.y < room.y + room.width) {
+
+            currentRoom = room;
+            break;
+        }
+    }
     player.velocityY += GRAVITY;
     if (player.isOnPlatforms(rooms)) {
         player.velocityY = 0;
