@@ -37,17 +37,18 @@ for (let imageName of imageNames) {
 }
 
 class Room {
-    constructor(name, x, y, width, height) {
+    constructor(name, x, y, width, height, platforms) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.platforms = platforms;
     }
 }
 
 class Platform {
-    constructor(x, y, width, height) {
+    constructor(x, y, width) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -56,13 +57,13 @@ class Platform {
 }
 
 let rooms = [
-    new Room('storefronts', 0, 0, 508, 96),
+    new Room('storefronts', 0, 0, 508, 96, [
+        new Platform(0, 5, 508),
+        new Platform(23, 35, 62),
+        new Platform(327, 20, 23),
+    ]),
 ];
-let platforms = [
-    new Platform(0, 5, 508),
-    new Platform(23, 35, 62),
-    new Platform(327, 20, 23),
-];
+let currentRoom = rooms[0];
 
 class Player {
     WALKING_SPEED = 1;
@@ -78,13 +79,15 @@ class Player {
         this.orientation = Orientation.RIGHT;
     }
 
-    isOnSurface() {
-        for (let platform of platforms) {
+    isOnPlatforms(room) {
+        for (let platform of room.platforms) {
+            let platformX = room.x + platform.x;
+            let platformY = room.y + platform.y;
             if (
-                (this.x + this.width > platform.x && this.x < platform.x + platform.width)
-                && (platform.y >= this.y && this.y > platform.y - platform.height)
+                (this.x + this.width > platformX && this.x < platformX + platform.width)
+                && (platformY >= this.y && this.y > platformY - platform.height)
             ) {
-                this.y = platform.y;
+                this.y = platformY;
                 return true;
             }
         }
@@ -102,7 +105,7 @@ function tick() {
     player.x += player.velocityX;
     player.y += player.velocityY;
     player.velocityY += G;
-    if (player.isOnSurface()) {
+    if (player.isOnPlatforms(currentRoom)) {
         player.velocityY = 0;
     }
     // Move viewport if needed
@@ -131,7 +134,7 @@ function draw() {
 
     // Draw platforms
     if (DEBUG) {
-        for (let platform of platforms) {
+        for (let platform of currentRoom.platforms) {
             ctx.fillStyle = '#08c';
             ctx.fillRect(SCALE * (platform.x - viewportX), SCALE * (HEIGHT - platform.y - viewportY),
                          SCALE * platform.width, SCALE * platform.height);
@@ -159,7 +162,7 @@ window.onkeydown = function(e) {
     switch (key) {
         // Up arrow
         case 38:
-            if (player.isOnSurface()) {
+            if (player.isOnPlatforms(currentRoom)) {
                 player.velocityY = player.JUMP_SPEED;
             }
             break;
