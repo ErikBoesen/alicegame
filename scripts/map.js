@@ -13,8 +13,24 @@ let rooms = [
         new Platform(0, 5, 508),
         new Platform(23, 35, 62),
         new Platform(327, 20, 23),
+
+        // Obstacle course
+        // Trash cans
+        new Platform(400, 26, 18),
+
+        // Bottom floor windows
+        new Platform(424, 30, 23),
+        new Platform(482, 30, 23),
+
+        // Top floor windows
+        new Platform(424, 62, 23),
+        new Platform(454, 62, 23),
+        new Platform(482, 62, 23),
+
+        // Roof
+        new Platform(360, 74, 50),
     ], []),
-    new Room('sky', 297, 0, 175, 96, true, false, false, [
+    new Room('sky', 520, 96, 175, 96, true, false, false, [
         new Platform(100, 5, 76),
     ], []),
 ];
