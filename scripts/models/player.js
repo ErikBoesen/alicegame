@@ -12,19 +12,30 @@ class Player {
         this.orientation = Orientation.RIGHT;
     }
 
-    isOnPlatforms(room) {
-        for (let platform of room.platforms) {
-            let platformX = room.x + platform.x;
-            let platformY = room.y + platform.y;
-            if (
-                (this.x + this.width >= platformX && this.x <= platformX + platform.width)
-                && (platformY >= this.y && this.y > platformY - platform.height)
-            ) {
-                this.y = platformY;
-                return true;
+    isOnPlatforms(rooms) {
+        for (let room of rooms) {
+            for (let platform of room.platforms) {
+                let platformX = room.x + platform.x;
+                let platformY = room.y + platform.y;
+                if (
+                    (this.x + this.width >= platformX && this.x <= platformX + platform.width)
+                    && (platformY >= this.y && this.y > platformY - platform.height)
+                ) {
+                    this.y = platformY;
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    avoidDoor(door) {
+        if (this.velocityX > 0 && this.x + this.width >= door.x) {
+            this.x = door.x - this.width;
+        }
+        if (this.velocityX < 0 && this.x <= door.x) {
+            this.x = door.x;
+        }
     }
 
     isOnWalls(room) {
@@ -38,6 +49,11 @@ class Player {
             if (this.velocityX > 0) this.velocityX = 0;
             return true;
         }
+        for (let door of room.doors) {
+            if (!door.open) {
+                this.avoidDoor(door);
+            }
+        }
         return false;
     }
 
@@ -46,6 +62,11 @@ class Player {
             if (Math.abs(door.x - this.x) < door.width) {
                 console.log(door.open);
                 door.open = !door.open;
+                if (door.open) {
+                    rooms[door.destination].visible = true;
+                } else {
+                    avoidDoor(door);
+                }
             }
         }
     }

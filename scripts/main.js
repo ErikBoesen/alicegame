@@ -10,7 +10,7 @@ function tick() {
     player.x += player.velocityX;
     player.y += player.velocityY;
     player.velocityY += GRAVITY;
-    if (player.isOnPlatforms(currentRoom)) {
+    if (player.isOnPlatforms(rooms)) {
         player.velocityY = 0;
     }
     if (player.isOnWalls(currentRoom)) {
