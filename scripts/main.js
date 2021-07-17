@@ -39,37 +39,6 @@ for (let imageName of imageNames) {
     images[imageName] = getImage(imageName);
 }
 
-class Room {
-    constructor(name, x, y, width, height, visible, platforms, doors) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.visible = visible;
-        this.platforms = platforms;
-        this.doors = doors;
-    }
-}
-
-class Platform {
-    constructor(x, y, width) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = 5;
-    }
-}
-
-class Door {
-    constructor(x, y, destination, orientation) {
-        this.x = x;
-        this.y = y;
-        this.destination = destination;
-        this.orientation = orientation;
-    }
-}
-
 let rooms = [
     new Room('bedroom', 0, 7, 104, 55, true, [
         new Platform(0, 0, 104),
@@ -86,36 +55,6 @@ let rooms = [
     ]),
 ];
 let currentRoom = rooms[0];
-
-class Player {
-    WALKING_SPEED = 1;
-    JUMP_SPEED = 2.5;
-
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.velocityX = 0;
-        this.velocityY = 0;
-        this.width = 9;
-        this.height = 40;
-        this.orientation = Orientation.RIGHT;
-    }
-
-    isOnPlatforms(room) {
-        for (let platform of room.platforms) {
-            let platformX = room.x + platform.x;
-            let platformY = room.y + platform.y;
-            if (
-                (this.x + this.width >= platformX && this.x <= platformX + platform.width)
-                && (platformY >= this.y && this.y > platformY - platform.height)
-            ) {
-                this.y = platformY;
-                return true;
-            }
-        }
-        return false;
-    }
-}
 
 let player = new Player(5, 40);
 
