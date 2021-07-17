@@ -4,6 +4,7 @@ const imageNames = [
     'bedroom',
     'kitchen',
     'storefronts',
+    'sky',
 ];
 function getImage(imageName) {
     let image = new Image();

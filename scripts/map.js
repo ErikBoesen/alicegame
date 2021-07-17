@@ -14,6 +14,9 @@ let rooms = [
         new Platform(23, 35, 62),
         new Platform(327, 20, 23),
     ], []),
+    new Room('sky', 297, 0, 175, 96, true, false, false, [
+        new Platform(100, 5, 76),
+    ], []),
 ];
 let currentRoom = rooms[0];
 
