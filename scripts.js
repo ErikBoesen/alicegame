@@ -24,6 +24,8 @@ const Orientation = {
 
 const imageNames = [
     'player',
+    'bedroom',
+    'kitchen',
     'storefronts',
 ];
 function getImage(imageName) {
@@ -57,7 +59,13 @@ class Platform {
 }
 
 let rooms = [
-    new Room('storefronts', 0, 0, 508, 96, [
+    new Room('bedroom', 0, 7, 104, 55, [
+        new Platform(0, 0, 104),
+    ]),
+    new Room('kitchen', 104, 7, 95, 55, [
+        new Platform(0, 0, 95),
+    ]),
+    new Room('storefronts', 199, 0, 508, 96, [
         new Platform(0, 5, 508),
         new Platform(23, 35, 62),
         new Platform(327, 20, 23),
@@ -84,7 +92,7 @@ class Player {
             let platformX = room.x + platform.x;
             let platformY = room.y + platform.y;
             if (
-                (this.x + this.width > platformX && this.x < platformX + platform.width)
+                (this.x + this.width >= platformX && this.x <= platformX + platform.width)
                 && (platformY >= this.y && this.y > platformY - platform.height)
             ) {
                 this.y = platformY;
@@ -136,7 +144,9 @@ function draw() {
     if (DEBUG) {
         for (let platform of currentRoom.platforms) {
             ctx.fillStyle = '#08c';
-            ctx.fillRect(SCALE * (platform.x - viewportX), SCALE * (HEIGHT - platform.y - viewportY),
+            platformX = currentRoom.x + platform.x;
+            platformY = currentRoom.y + platform.y;
+            ctx.fillRect(SCALE * (platformX - viewportX), SCALE * (HEIGHT - platformY - viewportY),
                          SCALE * platform.width, SCALE * platform.height);
         }
     }
