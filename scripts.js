@@ -24,6 +24,7 @@ const Orientation = {
 
 const imageNames = [
     'player',
+    'door',
     'bedroom',
     'kitchen',
     'storefronts',
