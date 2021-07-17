@@ -1,20 +1,5 @@
-let canvas = document.getElementById('game');
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-let ctx = canvas.getContext('2d');
-
-ctx.msImageSmoothingEnabled = false;
-ctx.mozImageSmoothingEnabled = false;
-ctx.webkitImageSmoothingEnabled = false;
-ctx.imageImageSmoothingEnabled = false;
-
-const DEBUG = false;
-
-const SCALE = 6,
-      WIDTH = Math.floor(window.innerWidth / SCALE),
-      HEIGHT = Math.floor(window.innerHeight / SCALE);
-// Higher tolerance allows player to move closer to edge of screen without moving viewport
 const GRAVITY = -0.1,
+      // Higher tolerance allows player to move closer to edge of screen without moving viewport
       PAN_TOLERANCE = 0.7;
 
 let viewportX = 0,
