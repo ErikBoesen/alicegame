@@ -47,7 +47,7 @@ class Person {
 
     avoidDoor(door) {
         if (!door.open) {
-            if (this.velocityX > 0 && door.x < this.x + this.width && this.x + this.width < door.x + door.width) {
+            if (this.velocityX > 0 && this.x < door.x && door.x < this.x + this.width) {
                 this.velocityX = 0;
                 this.x = door.x - this.width;
             }
