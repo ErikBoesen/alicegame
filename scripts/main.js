@@ -56,8 +56,7 @@ function draw() {
     for (let room of rooms) {
         if (!room.visible) continue;
 
-        let image = images[room.name];
-        ctx.drawImage(image,
+        ctx.drawImage(room.image,
                       SCALE * (room.x - viewportX), SCALE * (HEIGHT - room.y - room.height - viewportY),
                       SCALE * room.width, SCALE * room.height);
 
