@@ -91,7 +91,7 @@ function draw() {
             ctx.translate(SCALE * (door.x - viewportX),
                           SCALE * (HEIGHT - door.y - door.height - viewportY));
             ctx.scale(door.orientation, 1);
-            ctx.drawImage(images.door, 0, 0,
+            ctx.drawImage(door.image, 0, 0,
                           SCALE * door.width, SCALE * door.height);
             ctx.setTransform(1, 0, 0, 1, 0, 0);
         }
