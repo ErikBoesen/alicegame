@@ -64,12 +64,24 @@ function draw() {
         // Draw platforms
         if (DEBUG) {
             for (let platform of room.platforms) {
-                platformX = room.x + platform.x;
-                platformY = room.y + platform.y;
+                let platformX = room.x + platform.x;
+                let platformY = room.y + platform.y;
                 ctx.fillStyle = '#08c';
                 ctx.fillRect(SCALE * (platformX - viewportX), SCALE * (HEIGHT - platformY - viewportY),
                              SCALE * platform.width, SCALE * platform.height);
             }
+        }
+
+        for (let decoration of room.decorations) {
+            if (!decoration.visible) continue;
+
+            let decorationX = room.x + decoration.x;
+            let decorationY = room.y + decoration.y;
+            ctx.globalAlpha = decoration.alpha;
+            ctx.drawImage(decoration.image,
+                          SCALE * (decorationX - viewportX), SCALE * (HEIGHT - decorationY - viewportY),
+                          SCALE * decoration.width, SCALE * decoration.height);
+            ctx.globalAlpha = 1;
         }
 
         // Draw doors
