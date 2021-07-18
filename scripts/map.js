@@ -9,7 +9,7 @@ let rooms = [
     ], [
         new Door(93, 2, 2, Orientation.LEFT, false),
     ]),
-    new Room('storefronts', 199, 0, 508, 96, false, false, true, [
+    new Room('storefronts', 199, 0, 508, 96, false, true, false, [
         new Platform(0, 5, 508),
         new Platform(23, 35, 62),
         new Platform(327, 20, 23),
@@ -45,5 +45,12 @@ let rooms = [
 let player = new Player(5, 20);
 
 let characters = [
-    new Person(20, 20, Skins.pigtails),
+    new Person(300, 20, Skins.child),
+    new Person(300, 20, Skins.family),
+    new Person(300, 20, Skins.grey),
+    new Person(300, 20, Skins.hoodie),
+    new Person(300, 20, Skins.pigtails),
+    new Person(300, 20, Skins.pinkgirl),
+    new Person(300, 20, Skins.shifty),
+    new Person(300, 20, Skins.sleepy),
 ];
