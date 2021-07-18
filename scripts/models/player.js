@@ -96,6 +96,12 @@ class Person {
         if (this.isOnWalls()) {}
     }
 
+    jump(rooms) {
+        if (this.isOnPlatforms(rooms)) {
+            this.velocityY = this.JUMP_SPEED;
+        }
+    }
+
     draw(ctx) {
         ctx.translate(SCALE * (this.x - viewportX + (this.orientation === Orientation.LEFT ? this.width : 0)),
                       SCALE * (HEIGHT - this.y - this.height - viewportY));
@@ -112,7 +118,8 @@ class Player extends Person {
     }
 
     toggleDoor() {
-        for (let door of this.currentRoom.doors) {
+        const room = this.currentRoom;
+        for (let door of room.doors) {
             let doorX = room.x + door.x;
             if (Math.abs(doorX - this.x) < door.width) {
                 door.open = !door.open;
