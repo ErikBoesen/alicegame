@@ -84,18 +84,17 @@ function draw() {
             ctx.globalAlpha = 1;
         }
 
-        // Draw doors
-        for (let door of room.doors) {
-            if (door.open) {
-                doorX = room.x + door.x;
-                doorY = room.y + door.y;
-                ctx.translate(SCALE * (doorX - viewportX),
-                              SCALE * (HEIGHT - doorY - door.height - viewportY));
-                ctx.scale(door.orientation, 1);
-                ctx.drawImage(images.door, 0, 0,
-                              SCALE * door.width, SCALE * door.height);
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-            }
+    }
+
+    // Draw doors
+    for (let door of doors) {
+        if (door.open) {
+            ctx.translate(SCALE * (door.x - viewportX),
+                          SCALE * (HEIGHT - door.y - door.height - viewportY));
+            ctx.scale(door.orientation, 1);
+            ctx.drawImage(images.door, 0, 0,
+                          SCALE * door.width, SCALE * door.height);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
         }
     }
 

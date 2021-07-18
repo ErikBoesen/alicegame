@@ -1,13 +1,9 @@
 let rooms = [
     new Room('bedroom', 0, 7, 104, 55, true, false, true, [
         new Platform(0, 1, 104),
-    ], [
-        new Door(102, 2, 1, Orientation.LEFT, false),
-    ], [], []),
+    ], []),
     new Room('kitchen', 104, 7, 95, 55, false, true, true, [
         new Platform(0, 1, 95),
-    ], [
-        new Door(93, 2, 2, Orientation.LEFT, false),
     ], []),
     new Room('storefronts', 199, 0, 508, 96, false, true, false, [
         new Platform(0, 5, 508),
@@ -29,7 +25,7 @@ let rooms = [
 
         // Roof
         new Platform(360, 74, 50),
-    ], [], [
+    ], [
         new Decoration('open', 234, 67, 23, 13, true, function() {
             if (Math.random() > 0.99) {
                 this.visible = !this.visible;
@@ -53,7 +49,12 @@ let rooms = [
         new Platform(53, 44, 37),
         new Platform(25, 66, 47),
         new Platform(74, 75, 33),
-    ], [], []),
+    ], []),
+];
+
+let doors = [
+    new Door(102, 9, 1, Orientation.LEFT, false),
+    new Door(197, 9, 2, Orientation.LEFT, false),
 ];
 
 let player = new Player(5, 20);
