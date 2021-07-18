@@ -29,7 +29,11 @@ let rooms = [
 
         // Roof
         new Platform(360, 74, 50),
-    ], []),
+    ], [], [
+        new Decoration('bulb', 330, 50, 5, 6, true, function() {
+            this.visible = (Math.random() < 0.2);
+        }),
+    ]),
     new Room('sky', 520, 96, 176, 96, true, false, false, [
         // Main roof landing
         new Platform(100, 5, 76),
@@ -46,11 +50,11 @@ let player = new Player(5, 20);
 
 let characters = [
     new Person(300, 20, Skins.child),
-    new Person(300, 20, Skins.family),
-    new Person(300, 20, Skins.grey),
-    new Person(300, 20, Skins.hoodie),
-    new Person(300, 20, Skins.pigtails),
-    new Person(300, 20, Skins.pinkgirl),
-    new Person(300, 20, Skins.shifty),
-    new Person(300, 20, Skins.sleepy),
+    new Person(310, 20, Skins.family),
+    new Person(320, 20, Skins.grey),
+    new Person(330, 20, Skins.hoodie),
+    new Person(340, 20, Skins.pigtails),
+    new Person(350, 20, Skins.pinkgirl),
+    new Person(360, 20, Skins.shifty),
+    new Person(370, 20, Skins.sleepy),
 ];
