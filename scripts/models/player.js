@@ -59,7 +59,8 @@ class Person {
         }
     }
 
-    isOnWalls(room) {
+    isOnWalls() {
+        const room = this.currentRoom;
         if (!room.leftOpen && this.x < room.x) {
             this.x = room.x;
             if (this.velocityX < 0) this.velocityX = 0;
@@ -74,6 +75,25 @@ class Person {
             this.avoidDoor(room, door);
         }
         return false;
+    }
+
+    tick(rooms) {
+        for (let room of rooms) {
+            if (room.x < this.x && this.x < room.x + room.width &&
+                room.y < this.y + this.height && this.y < room.y + room.width) {
+
+                this.currentRoom = room;
+                break;
+            }
+        }
+
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+        this.velocityY += GRAVITY;
+        if (this.isOnPlatforms(rooms)) {
+            this.velocityY = 0;
+        }
+        if (this.isOnWalls()) {}
     }
 
     draw(ctx) {
@@ -91,8 +111,8 @@ class Player extends Person {
         super(x, y, Skins.apron);
     }
 
-    toggleDoor(room) {
-        for (let door of room.doors) {
+    toggleDoor() {
+        for (let door of this.currentRoom.doors) {
             let doorX = room.x + door.x;
             if (Math.abs(doorX - this.x) < door.width) {
                 door.open = !door.open;

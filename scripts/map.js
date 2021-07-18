@@ -41,9 +41,9 @@ let rooms = [
         new Platform(74, 77, 33),
     ], []),
 ];
-let currentRoom = rooms[0];
 
 let player = new Player(5, 20);
+
 let characters = [
     new Person(20, 20, Skins.pigtails),
 ];

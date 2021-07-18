@@ -22,7 +22,7 @@ window.onkeydown = function(e) {
             player.velocityX = player.orientation * player.WALKING_SPEED;
             break;
         case 32:
-            player.toggleDoor(currentRoom);
+            player.toggleDoor();
         default:
             //console.log(key);
             break;
