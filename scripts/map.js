@@ -37,7 +37,7 @@ let rooms = [
             }
         }),
         new Decoration('right', 459, 55, 15, 7, true, function(ticks) {
-            this.alpha = 0.5 * (Math.sin(ticks / 100) + 1);
+            this.alpha = Math.pow(0.5 - 0.5 * (Math.sin(ticks / 40)), 3);
         }),
     ]),
     new Room('sky', 520, 96, 176, 96, true, false, false, [
