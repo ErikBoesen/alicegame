@@ -10,10 +10,14 @@ function tick() {
     for (let character of characters) {
         if (Math.floor(Math.random() * 200) == 0) {
             // TODO: deduplicate this logic
-            character.velocityX = Math.random() * 1 - 0.5;
-            character.orientation = Math.sign(character.velocityX);
+            if (Math.floor(Math.random() * 3) == 0) {
+                character.velocityX = Math.random() * 0.5 - 0.25;
+                character.orientation = Math.sign(character.velocityX);
+            } else {
+                character.velocityX = 0;
+            }
         }
-        if (Math.floor(Math.random() * 400) == 0) {
+        if (Math.floor(Math.random() * 600) == 0) {
             character.jump(rooms);
         }
         character.tick(rooms);
