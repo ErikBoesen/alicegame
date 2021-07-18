@@ -7,6 +7,12 @@ let viewportX = 0,
     viewportY = 0;
 
 function tick() {
+    for (let room of rooms) {
+        for (let decoration of room.decorations) {
+            if (decoration.update) decoration.update(ticks);
+        }
+    }
+
     for (let character of characters) {
         if (Math.floor(Math.random() * 200) == 0) {
             // TODO: deduplicate this logic

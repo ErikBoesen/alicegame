@@ -3,12 +3,12 @@ let rooms = [
         new Platform(0, 1, 104),
     ], [
         new Door(102, 2, 1, Orientation.LEFT, false),
-    ], []),
+    ], [], []),
     new Room('kitchen', 104, 7, 95, 55, false, true, true, [
         new Platform(0, 1, 95),
     ], [
         new Door(93, 2, 2, Orientation.LEFT, false),
-    ]),
+    ], []),
     new Room('storefronts', 199, 0, 508, 96, false, true, false, [
         new Platform(0, 5, 508),
         new Platform(23, 35, 62),
@@ -30,8 +30,18 @@ let rooms = [
         // Roof
         new Platform(360, 74, 50),
     ], [], [
-        new Decoration('bulb', 330, 50, 5, 6, true, function() {
-            this.visible = (Math.random() < 0.2);
+        new Decoration('open', 234, 67, 23, 13, true, function() {
+            if (Math.random() > 0.99) {
+                this.visible = !this.visible;
+            }
+        }),
+        new Decoration('bulb', 353, 63, 5, 6, true, function() {
+            if (Math.random() > 0.94) {
+                this.visible = !this.visible;
+            }
+        }),
+        new Decoration('right', 459, 55, 15, 7, true, function(ticks) {
+            this.alpha = 0.5 * (Math.sin(ticks / 100) + 1);
         }),
     ]),
     new Room('sky', 520, 96, 176, 96, true, false, false, [
@@ -42,8 +52,8 @@ let rooms = [
         // Distant rooves, bottom to top
         new Platform(53, 44, 37),
         new Platform(25, 66, 47),
-        new Platform(74, 77, 33),
-    ], []),
+        new Platform(74, 75, 33),
+    ], [], []),
 ];
 
 let player = new Player(5, 20);

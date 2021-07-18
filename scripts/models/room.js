@@ -1,5 +1,5 @@
 class Room {
-    constructor(name, x, y, width, height, visible, leftOpen, rightOpen, platforms, doors) {
+    constructor(name, x, y, width, height, visible, leftOpen, rightOpen, platforms, doors, decorations) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -10,5 +10,6 @@ class Room {
         this.rightOpen = rightOpen;
         this.platforms = platforms;
         this.doors = doors;
+        this.decorations = decorations;
     }
 }
