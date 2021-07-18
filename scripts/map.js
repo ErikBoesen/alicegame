@@ -45,5 +45,5 @@ let currentRoom = rooms[0];
 
 let player = new Player(5, 20);
 let characters = [
-    new Person(),
+    new Person(20, 20, Skins.pigtails),
 ];

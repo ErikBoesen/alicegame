@@ -1,5 +1,4 @@
 const imageNames = [
-    'player',
     'door',
     'bedroom',
     'kitchen',

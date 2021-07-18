@@ -1,14 +1,30 @@
+const Skins = {
+    apron: { width: 9, height: 40 },
+    child: { width: 9, height: 35 },
+    family: { width: 19, height: 40 },
+    grey: { width: 12, height: 40 },
+    hoodie: { width: 9, height: 40 },
+    pigtails: { width: 15, height: 39 },
+    pinkgirl: { width: 12, height: 40 },
+    shifty: { width: 9, height: 42 },
+    sleepy: { width: 10, height: 40 },
+};
+for (let name in Skins) {
+    Skins[name].image = getImage('people/' + name);
+}
+
 class Person {
     WALKING_SPEED = 1;
     JUMP_SPEED = 2.5;
 
-    constructor(x, y) {
+    constructor(x, y, skin) {
         this.x = x;
         this.y = y;
         this.velocityX = 0;
         this.velocityY = 0;
-        this.width = 9;
-        this.height = 40;
+        this.image = skin.image;
+        this.width = skin.width;
+        this.height = skin.height;
         this.orientation = Orientation.RIGHT;
     }
 
@@ -62,6 +78,10 @@ class Person {
 }
 
 class Player extends Person {
+    constructor(x, y) {
+        super(x, y, Skins.apron);
+    }
+
     toggleDoor(room) {
         for (let door of room.doors) {
             let doorX = room.x + door.x;
