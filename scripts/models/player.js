@@ -1,4 +1,4 @@
-class Player {
+class Person {
     WALKING_SPEED = 1;
     JUMP_SPEED = 2.5;
 
@@ -59,7 +59,9 @@ class Player {
         }
         return false;
     }
+}
 
+class Player extends Person {
     toggleDoor(room) {
         for (let door of room.doors) {
             let doorX = room.x + door.x;

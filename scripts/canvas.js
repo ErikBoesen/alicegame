@@ -12,4 +12,4 @@ const SCALE = 6,
       WIDTH = Math.floor(window.innerWidth / SCALE),
       HEIGHT = Math.floor(window.innerHeight / SCALE);
 
-const DEBUG = false;
+const DEBUG = true;

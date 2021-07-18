@@ -30,7 +30,7 @@ let rooms = [
         // Roof
         new Platform(360, 74, 50),
     ], []),
-    new Room('sky', 520, 96, 175, 96, true, false, false, [
+    new Room('sky', 520, 96, 176, 96, true, false, false, [
         // Main roof landing
         new Platform(100, 5, 76),
         new Platform(100, 35, 76),
@@ -44,3 +44,6 @@ let rooms = [
 let currentRoom = rooms[0];
 
 let player = new Player(5, 20);
+let characters = [
+    new Person(),
+];
