@@ -7,23 +7,14 @@ let viewportX = 0,
     viewportY = 0;
 
 function tick() {
-    // Move player
-    player.x += player.velocityX;
-    player.y += player.velocityY;
-    for (let room of rooms) {
-        if (room.x < player.x && player.x < room.x + room.width &&
-            room.y < player.y + player.height && player.y < room.y + room.width) {
-
-            currentRoom = room;
-            break;
+    for (let character of characters) {
+        if (ticks % 200 == 0) {
+            character.velocityX = Math.random() * 2 - 1;
         }
+        character.tick(rooms);
     }
-    player.velocityY += GRAVITY;
-    if (player.isOnPlatforms(rooms)) {
-        player.velocityY = 0;
-    }
-    if (player.isOnWalls(currentRoom)) {
-    }
+    // Move player
+    player.tick(rooms);
 
     // Move viewport if needed
     if (player.velocityX < 0 && (player.x - viewportX < (1 - PAN_TOLERANCE_X) * WIDTH)) {
@@ -81,13 +72,19 @@ function draw() {
         }
     }
 
+    for (let character of characters) {
+        character.draw(ctx);
+    }
+
     // Draw player
     player.draw(ctx);
 }
 
+let ticks = 0;
 function loop() {
     tick();
     draw();
+    ticks++;
 };
 
 loop();
