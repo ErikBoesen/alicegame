@@ -82,12 +82,7 @@ function draw() {
     }
 
     // Draw player
-    ctx.translate(SCALE * (player.x - viewportX + (player.orientation === Orientation.LEFT ? player.width : 0)),
-                  SCALE * (HEIGHT - player.y - player.height - viewportY));
-    ctx.scale(player.orientation, 1);
-    ctx.drawImage(images.player, 0, 0,
-                  SCALE * player.width, SCALE * player.height);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    player.draw(ctx);
 }
 
 function loop() {

@@ -75,6 +75,15 @@ class Person {
         }
         return false;
     }
+
+    draw(ctx) {
+        ctx.translate(SCALE * (this.x - viewportX + (this.orientation === Orientation.LEFT ? this.width : 0)),
+                      SCALE * (HEIGHT - this.y - this.height - viewportY));
+        ctx.scale(this.orientation, 1);
+        ctx.drawImage(this.image, 0, 0,
+                      SCALE * this.width, SCALE * this.height);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+    }
 }
 
 class Player extends Person {
